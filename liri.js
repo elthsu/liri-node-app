@@ -46,10 +46,15 @@ inquirer.prompt([
  		case 'Quit':
  		console.log("\n");
  		console.log("See you next time!\n");
+ 		fs.appendFile("log.txt", "\nquit\n", function(err) {
+    		if (err) {
+      			return console.log(err);
+    		}
+    	})
  		process.exit;
  		break;
 
-}
+	}
 });
 
 }
@@ -59,6 +64,11 @@ inquirer.prompt([
 function showTweet (){
 
 	console.log("You chose: " + selection);
+	fs.appendFile("log.txt", "You chose: " + selection + "\n", function(err) {
+    	if (err) {
+      		return console.log(err);
+    	}
+    })
 
 	var client = new Twitter({
 	  	consumer_key: keys.twitterKeys.consumer_key,
@@ -75,16 +85,36 @@ function showTweet (){
 	  				console.log("\nLatest Tweets for " + tweets[0].user.screen_name);
 	  				console.log("\n");
 
+	  				fs.appendFile("log.txt", "\nLatest Tweets for " 
+	  						+ tweets[0].user.screen_name + "\n", function(err) {
+				    	if (err) {
+				      		return console.log(err);
+				    	}
+    				})
+
 	  			for (var i = 0; i < tweets.length && i < 20; i++) {
 	  				
 	  				console.log("Tweet # " + (i+1));
 	  				console.log((tweets[i].created_at).slice(0, 19) + (tweets[i].created_at).slice(25, 30));
 	  				console.log(tweets[i].text);
+
+	  				fs.appendFile("log.txt", "\nTweet # " + (i+1) 
+	  						+ "\n" + (tweets[i].created_at).slice(0, 19) + (tweets[i].created_at).slice(25, 30)
+	  						+ "\n" + tweets[i].text, function(err) {
+				    			if (err) {
+				      				return console.log(err);
+				    			}
+    				})
 	  				
 
 	  			}
 	    		
 	    	console.log("\n");
+	    	fs.appendFile("log.txt", "\n", function(err) {
+				    			if (err) {
+				      				return console.log(err);
+				    			}
+    		})
 	  	
 	  	}
 
@@ -132,6 +162,20 @@ function spotifySong (){
 	  			console.log("Preview Link: " + data.tracks.items[5].preview_url);
 	  			console.log("Album Name: " + data.tracks.items[5].album.name);
 	  			console.log("\n");
+
+
+	  			fs.appendFile("log.txt", "\nNo data entered. So you need to see the sign." 
+	  						+ "\nArtist: " + data.tracks.items[5].artists[0].name
+	  						+ "\nSong Name: " + data.tracks.items[5].name
+	  						+ "\nPreview Link: " + data.tracks.items[5].preview_url
+	  						+ "\nAlbum Name: " + data.tracks.items[5].album.name, function(err) {
+				    			if (err) {
+				      				return console.log(err);
+				    			}
+    			})
+
+
+
 	  			menu();
 
 
@@ -154,6 +198,17 @@ function spotifySong (){
 	  			console.log("Preview Link: " + data.tracks.items[0].preview_url);
 	  			console.log("Album Name: " + data.tracks.items[0].album.name);
 	  			console.log("\n");
+
+
+	  			fs.appendFile("log.txt", "\nYou've searched for: " + selection 
+	  						+ "\nArtist: " + data.tracks.items[5].artists[0].name
+	  						+ "\nSong Name: " + data.tracks.items[5].name
+	  						+ "\nPreview Link: " + data.tracks.items[5].preview_url
+	  						+ "\nAlbum Name: " + data.tracks.items[5].album.name, function(err) {
+				    			if (err) {
+				      				return console.log(err);
+				    			}
+    			})
 	  			menu();
 
 
@@ -204,6 +259,22 @@ function movieInfo (){
 						console.log("\nPlot: " + JSON.parse(body).Plot);
 						console.log("Actors: " + JSON.parse(body).Actors);
 						console.log("\n");
+
+
+	  					fs.appendFile("log.txt", "\nTitle: " + JSON.parse(body).Title 
+	  						+ "\nRelease Year: " + JSON.parse(body).Year 
+	  						+ "\nIMDB Rating: " + JSON.parse(body).Ratings[0].Value 
+	  						+ "\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value
+	  						+ "\nCountry Produced: " + JSON.parse(body).Country
+	  						+ "\nLanguage: " + JSON.parse(body).Language
+	  						+ "\nPlot: " + JSON.parse(body).Plot 
+	  						+ "\nActors: " + JSON.parse(body).Actors, function(err) {
+				    			if (err) {
+				      				return console.log(err);
+				    			}
+    					})
+
+
 			    		menu();
 			    
 	  				}
@@ -230,6 +301,20 @@ function movieInfo (){
 						console.log("\nPlot: " + JSON.parse(body).Plot);
 						console.log("Actors: " + JSON.parse(body).Actors);
 						console.log("\n");
+
+						fs.appendFile("log.txt", "\nTitle: " + JSON.parse(body).Title 
+	  						+ "\nRelease Year: " + JSON.parse(body).Year 
+	  						+ "\nIMDB Rating: " + JSON.parse(body).Ratings[0].Value 
+	  						+ "\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value
+	  						+ "\nCountry Produced: " + JSON.parse(body).Country
+	  						+ "\nLanguage: " + JSON.parse(body).Language
+	  						+ "\nPlot: " + JSON.parse(body).Plot 
+	  						+ "\nActors: " + JSON.parse(body).Actors, function(err) {
+				    			if (err) {
+				      				return console.log(err);
+				    			}
+    					})
+
 			    		menu();
 			    
 	  				}
@@ -270,6 +355,19 @@ function randomThing (){
 	  		console.log("Preview Link: " + data.tracks.items[5].preview_url);
 	  		console.log("Album Name: " + data.tracks.items[5].album.name);
 	  		console.log("\n");
+
+
+	  		fs.appendFile("log.txt", "\nYou've searched for: " + file 
+	  				+ "\nArtist: " + data.tracks.items[5].artists[0].name 
+	  				+ "\nSong Name: " + data.tracks.items[5].name
+	  				+ "\nPreview Link: " + data.tracks.items[5].preview_url
+	  				+ "\nAlbum Name: " + data.tracks.items[5].album.name, function(err) {
+				    	if (err) {
+				      		return console.log(err);
+				    	}
+    		})
+
+
 	  		menu();
 
 
